@@ -1,0 +1,39 @@
+{
+  "name": "mysql-liquibase-converter",
+  "version": "0.0.1",
+  "description": "The MySql to Liquibase Converter is intended to split up the contents of a single MySql sql file into a series of smaller files that are easier to maintain and version independently.",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node index",
+    "test": "gulp test",
+    "watch": "gulp watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/peopleplan/mysql-liquibase-converter.git"
+  },
+  "keywords": [
+    "mysql",
+    "liquibase",
+    "converter"
+  ],
+  "author": "socsieng@gmail.com",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/peopleplan/mysql-liquibase-converter#readme",
+  "private": true,
+  "engines": {
+    "node": ">=4.1 <5",
+    "npm": ">=3.1 <4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.1.2",
+    "babel-core": "^6.1.2",
+    "babel-preset-es2015": "^6.1.2",
+    "babel-preset-stage-0": "^6.1.2",
+    "chai": "^3.4.1",
+    "gulp": "^3.9.0",
+    "gulp-batch": "^1.0.5",
+    "gulp-mocha": "^2.1.3",
+    "gulp-watch": "^4.3.5"
+  }
+}
