@@ -1,6 +1,7 @@
 class Reader {
     static expressions = [
-        { type: 'table', pattern: /\s*create\s+table\s+(if\s+not\s+exists\s+)?`?([^\s`]+)`?[\s\S]*?;/gmi }
+        { type: 'table', pattern: /\bcreate\s+table\s+(if\s+not\s+exists\s+)?`?([^\s`]+)`?[\s\S]*?;/gi, nameIndex: 2 },
+        { type: 'insert', pattern: /\binsert\s+into\s*`?([^\s`]+)`?[\s\S]*?;/gi, nameIndex: 1 }
     ];
 
     parse (input) {
@@ -16,7 +17,7 @@ class Reader {
                         type: exp.type,
                         index: match.index,
                         match: match[0],
-                        name: match[2]
+                        name: match[exp.nameIndex]
                     });
                 }
             });
