@@ -19,7 +19,7 @@ class Converter {
         });
     }
 
-    createFiles (outputLocation, input) {
+    createFiles (input, outputLocation) {
         let graph = this.toGraph(input);
         let json = {
             databaseChangeLog: []

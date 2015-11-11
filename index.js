@@ -1,3 +1,1 @@
-import Reader from './src/reader';
-
-console.log('TODO: implement this');
+require('./src/command');

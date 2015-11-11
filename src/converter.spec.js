@@ -59,7 +59,7 @@ describe('Converter', () => {
     describe('files', () => {
         it('should create files on disk based on basic.sql file', () => {
             const input = fs.readFileSync(path.resolve(__dirname, '../testdata/basic.sql'), 'utf8');
-            let result = converter.createFiles(path.resolve(__dirname, '../testdata/temp'), input);
+            let result = converter.createFiles(input, path.resolve(__dirname, '../testdata/temp'));
 
             // check that files exist and are accessible
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/changelog.json'));
