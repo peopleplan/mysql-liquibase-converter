@@ -17,6 +17,7 @@ describe('Reader', () => {
             result.length.should.equal(1);
             result[0].type.should.equal('table');
             result[0].name.should.equal('my_table');
+            result[0].match.should.equal('create table if not exists `my_table` ();');
         });
 
         it('should read single line create table statement without exists', () => {
@@ -25,6 +26,7 @@ describe('Reader', () => {
             result.length.should.equal(1);
             result[0].type.should.equal('table');
             result[0].name.should.equal('my_table');
+            result[0].match.should.equal('create table `my_table` ();');
         });
 
         it('should read create table statement without back ticks', () => {
@@ -33,6 +35,7 @@ describe('Reader', () => {
             result.length.should.equal(1);
             result[0].type.should.equal('table');
             result[0].name.should.equal('my_table');
+            result[0].match.should.equal('create table if not exists my_table ();');
         });
 
         it('should read multi line create table statement', () => {
@@ -41,6 +44,7 @@ describe('Reader', () => {
             result.length.should.equal(1);
             result[0].type.should.equal('table');
             result[0].name.should.equal('my_table');
+            result[0].match.should.equal('create table if not exists `my_table` (\n);');
         });
 
         it('should read multiple create table statements', () => {
@@ -50,9 +54,11 @@ describe('Reader', () => {
 
             result[0].type.should.equal('table');
             result[0].name.should.equal('table1');
+            result[0].match.should.equal('create table if not exists `table1` ();');
 
             result[1].type.should.equal('table');
             result[1].name.should.equal('table2');
+            result[1].match.should.equal('create table if not exists `table2` ();');
         });
     });
 
