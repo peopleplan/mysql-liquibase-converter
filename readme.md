@@ -4,18 +4,6 @@ The MySql to Liquibase Converter is intended to split up the contents of a singl
 
 ## Installation
 
-There are two ways to install this package.
-
-### Option 1
-
-Install directly from github.
-
-```
-npm install peopleplan/mysql-liquibase-converter -g
-```
-
-### Option 2
-
 Clone the repository and install it locally.
 
 ```
