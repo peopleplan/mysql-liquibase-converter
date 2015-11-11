@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://bitbucket.org/peopleplan/mysql-liquibase-converter.git"
+    "url": "git@github.com:peopleplan/mysql-liquibase-converter.git"
   },
   "keywords": [
     "mysql",
@@ -19,7 +19,7 @@
   ],
   "author": "socsieng@gmail.com",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/peopleplan/mysql-liquibase-converter#readme",
+  "homepage": "https://github.com/peopleplan/mysql-liquibase-converter",
   "private": true,
   "engines": {
     "node": ">=4.1 <5",
