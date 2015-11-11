@@ -47,8 +47,17 @@ describe('Reader', () => {
             result[0].match.should.equal('create table if not exists `my_table` (\n);');
         });
 
+        it('should read multi line create table statement with trailing whitespace', () => {
+            let result = reader.parse('create table if not exists `my_table` (\n);  \n');
+
+            result.length.should.equal(1);
+            result[0].type.should.equal('table');
+            result[0].name.should.equal('my_table');
+            result[0].match.should.equal('create table if not exists `my_table` (\n);');
+        });
+
         it('should read multiple create table statements', () => {
-            let result = reader.parse('create table if not exists `table1` ();\ncreate table if not exists `table2` ();');
+            let result = reader.parse('create table if not exists `table1` ();\n\ncreate table if not exists `table2` ();');
 
             result.length.should.equal(2);
 
@@ -90,6 +99,20 @@ describe('Reader', () => {
 
         it('should read multiple single line insert statements', () => {
             let result = reader.parse('INSERT INTO `my_table` (`key`, `value`) VALUES (\'my_key\', 1);\nINSERT INTO `my_table` (`key`, `value`) VALUES (\'my_key\', 2);');
+
+            result.length.should.equal(2);
+
+            result[0].type.should.equal('insert');
+            result[0].name.should.equal('my_table');
+            result[0].match.should.equal('INSERT INTO `my_table` (`key`, `value`) VALUES (\'my_key\', 1);');
+
+            result[1].type.should.equal('insert');
+            result[1].name.should.equal('my_table');
+            result[1].match.should.equal('INSERT INTO `my_table` (`key`, `value`) VALUES (\'my_key\', 2);');
+        });
+
+        it('should read multiple single line insert statements with trailing whitespace', () => {
+            let result = reader.parse('INSERT INTO `my_table` (`key`, `value`) VALUES (\'my_key\', 1);\t\n\nINSERT INTO `my_table` (`key`, `value`) VALUES (\'my_key\', 2);\t\n');
 
             result.length.should.equal(2);
 
