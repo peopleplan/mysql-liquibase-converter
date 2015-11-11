@@ -73,9 +73,7 @@ describe('Reader', () => {
             result[0].name.should.equal('my_table');
         });
 
-        // don't know how to handle this yet. might be more trouble than it is worth.
-        // the primary focus for this initially will be the creation of tables
-        it.skip('should read single line insert statement that contains `;` as part of the values', () => {
+        it('should read single line insert statement that contains `;` as part of the values', () => {
             let result = reader.parse('INSERT INTO `my_table` (`key`, `value`) VALUES (\'my;key\', 1);');
 
             result.length.should.equal(1);
@@ -84,7 +82,7 @@ describe('Reader', () => {
             result[0].match.should.equal('INSERT INTO `my_table` (`key`, `value`) VALUES (\'my;key\', 1);');
         });
 
-        it('should read  multiple single line insert statements', () => {
+        it('should read multiple single line insert statements', () => {
             let result = reader.parse('INSERT INTO `my_table` (`key`, `value`) VALUES (\'my_key\', 1);\nINSERT INTO `my_table` (`key`, `value`) VALUES (\'my_key\', 2);');
 
             result.length.should.equal(2);
