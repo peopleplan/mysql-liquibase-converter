@@ -1,6 +1,6 @@
 {
   "name": "mysql-liquibase-converter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The MySql to Liquibase Converter is intended to split up the contents of a single MySql sql file into a series of smaller files that are easier to maintain and version independently.",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   "author": "socsieng@gmail.com",
   "license": "ISC",
   "homepage": "https://github.com/peopleplan/mysql-liquibase-converter",
-  "private": true,
+  "private": false,
   "engines": {
     "node": ">=4.1 <5",
     "npm": ">=2.1 <4"

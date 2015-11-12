@@ -4,14 +4,12 @@ The MySql to Liquibase Converter is intended to split up the contents of a singl
 
 ## Installation
 
-Clone the repository and install it locally.
-
 ```
-npm install . -g
+npm install --global mysql-liquibase-converter
 ```
 
 ## Usage
 
 ```
-mysqlbase <sqlFile> [output]
+mysqlbase <sqlFile> [outputLocation]
 ```

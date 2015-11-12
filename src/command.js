@@ -16,9 +16,10 @@ let outputDirectory;
 
 program
     .version(packageInfo.version)
-    .arguments('<sqlFile> [output]')
-    .action((sqlFile, output) => {
-        outputDirectory = output;
+    .usage('<sqlFile> [outputLocation]')
+    .arguments('<sqlFile> [outputLocation]')
+    .action((sqlFile, outputLocation) => {
+        outputDirectory = outputLocation;
         file = sqlFile;
     });
 
