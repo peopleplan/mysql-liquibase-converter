@@ -37,6 +37,3 @@ node_modules
 temp
 *.temp
 *.tmp
-
-# Compiled output
-lib/
