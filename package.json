@@ -27,8 +27,8 @@
   "homepage": "https://github.com/peopleplan/mysql-liquibase-converter",
   "private": false,
   "engines": {
-    "node": ">=4.1 <5",
-    "npm": ">=2.1 <4"
+    "node": ">=4.1",
+    "npm": ">=2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.1.2",
