@@ -7,10 +7,14 @@ class SqlFormatter extends FormatterBase {
         output += this.getPrefix();
         output += '\n\n';
         output += '--changeset converter:baseline dbms:mysql\n';
-        output += readerResult.match;
+        output += this.formatContent(readerResult.match);
         output += '\n';
 
         return output;
+    }
+
+    formatContent (content) {
+        return content;
     }
 }
 
