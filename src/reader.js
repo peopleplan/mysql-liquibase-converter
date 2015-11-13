@@ -31,7 +31,7 @@ class Reader {
                 }
             });
 
-        return matches;
+        return matches.sort((a, b) => a.index - b.index);
     }
 }
 

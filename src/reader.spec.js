@@ -1,5 +1,7 @@
 import chai from 'chai'
 import Reader from './reader';
+import fs from 'fs';
+import path from 'path';
 
 chai.should();
 
@@ -123,6 +125,30 @@ describe('Reader', () => {
             result[1].type.should.equal('insert');
             result[1].name.should.equal('my_table');
             result[1].match.should.equal('INSERT INTO `my_table` (`key`, `value`) VALUES (\'my_key\', 2);');
+        });
+    });
+
+    describe('combined', () => {
+        it('should read file that contains multiple statements', () => {
+            const input = fs.readFileSync(path.resolve(__dirname, '../testdata/reader-sort.sql'), 'utf8');
+            let result = reader.parse(input);
+
+            result.length.should.equal(5);
+
+            result[0].type.should.equal('table');
+            result[0].name.should.equal('my_table');
+
+            result[1].type.should.equal('insert');
+            result[1].name.should.equal('my_table');
+
+            result[2].type.should.equal('table');
+            result[2].name.should.equal('my_table2');
+
+            result[3].type.should.equal('insert');
+            result[3].name.should.equal('my_table2');
+
+            result[4].type.should.equal('insert');
+            result[4].name.should.equal('my_table2');
         });
     });
 });
