@@ -8,15 +8,15 @@ class Reader {
         let matches = [];
         Reader.expressions
             .forEach((exp) => {
-                var startMatch;
+                let startMatch;
 
                 exp.pattern[0].lastIndex = 0;
                 exp.pattern[1].lastIndex = 0;
 
                 while (startMatch = exp.pattern[0].exec(input)) {
-                    var startIndex = startMatch.index;
-                    var endIndex = input.length;
-                    var endMatch = exp.pattern[1].exec(input.substring(startIndex + startMatch[0].length));
+                    let startIndex = startMatch.index;
+                    let endIndex = input.length;
+                    let endMatch = exp.pattern[1].exec(input.substring(startIndex + startMatch[0].length));
 
                     if (endMatch) {
                         endIndex = startIndex + startMatch[0].length + endMatch.index + endMatch[0].length;
@@ -31,7 +31,27 @@ class Reader {
                 }
             });
 
-        return matches.sort((a, b) => a.index - b.index);
+        matches.sort((a, b) => a.index - b.index);
+
+        // combine related elements together
+        matches = this.combine(matches);
+
+        return matches;
+    }
+
+    combine (results) {
+        let merged = {};
+
+        results.forEach((r) => {
+            let key = `${r.type}:${r.name}`;
+            if (key in merged) {
+                merged[key].match += '\n\n' + r.match;
+            } else {
+                merged[key] = r;
+            }
+        });
+
+        return Object.getOwnPropertyNames(merged).map((name) => merged[name]);
     }
 }
 
