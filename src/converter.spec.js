@@ -2,6 +2,7 @@ import chai from 'chai'
 import Converter from './converter';
 import Reader from './reader';
 import SqlFormatter from './sql-formatter';
+import TableFormatter from './table-formatter';
 import fs from 'fs';
 import path from 'path';
 
@@ -14,7 +15,7 @@ describe('Converter', () => {
 
     beforeEach(() => {
         formatters = new SqlFormatter();
-        formatters['table'] = new SqlFormatter();
+        formatters['table'] = new TableFormatter();
 
         reader = new Reader();
 
