@@ -31,10 +31,10 @@ class Reader {
                 }
             });
 
-        matches.sort((a, b) => a.index - b.index);
-
         // combine related elements together
         matches = this.combine(matches);
+
+        matches.sort((a, b) => a.index - b.index);
 
         return matches;
     }
