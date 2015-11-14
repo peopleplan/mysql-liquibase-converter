@@ -42,3 +42,5 @@ temp
 
 # Source files
 src/
+testdata/
+*.spec.js
