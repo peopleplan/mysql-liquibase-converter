@@ -1,12 +1,27 @@
 class Reader {
-    static expressions = [
-        { type: 'table', pattern: [ /\bcreate\s+table\s+(if\s+not\s+exists\s+)?`?([^\s`]+)`?/gi, /;(?=[ \t]*$)/mi ], nameIndex: 2 },
-        { type: 'insert', pattern: [ /\binsert\s+into\s*`?([^\s`]+)`?/gi, /;(?=[ \t]*$)/mi ], nameIndex: 1 }
-    ];
+    static tableExpression = {
+        type: 'table',
+        pattern: [ /\bcreate\s+table\s+(if\s+not\s+exists\s+)?`?([^\s`]+)`?/gi, /;(?=[ \t]*$)/mi ],
+        nameIndex: 2
+    };
+
+    static insertExpression = {
+        type: 'insert',
+        pattern: [ /\binsert\s+into\s*`?([^\s`]+)`?/gi, /;(?=[ \t]*$)/mi ],
+        nameIndex: 1
+    };
+
+    constructor ({ includeData } = {}) {
+        this.expressions = [ Reader.tableExpression ];
+
+        if (includeData) {
+            this.expressions.push(Reader.insertExpression);
+        }
+    }
 
     parse (input) {
         let matches = [];
-        Reader.expressions
+        this.expressions
             .forEach((exp) => {
                 let startMatch;
 

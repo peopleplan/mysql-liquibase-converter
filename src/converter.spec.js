@@ -5,6 +5,7 @@ import SqlFormatter from './sql-formatter';
 import TableFormatter from './table-formatter';
 import fs from 'fs';
 import path from 'path';
+import rimraf from 'rimraf'
 
 chai.should();
 
@@ -17,7 +18,7 @@ describe('Converter', () => {
         formatters = new SqlFormatter();
         formatters['table'] = new TableFormatter();
 
-        reader = new Reader();
+        reader = new Reader({ includeData: true });
 
         converter = new Converter(reader, formatters);
     });
@@ -58,6 +59,10 @@ describe('Converter', () => {
     });
 
     describe('files', () => {
+        beforeEach(() => {
+            rimraf.sync(path.resolve(__dirname, '../testdata/temp'));
+        });
+
         it('should create files on disk based on basic.sql file', () => {
             const input = fs.readFileSync(path.resolve(__dirname, '../testdata/basic.sql'), 'utf8');
             let result = converter.createFiles(input, path.resolve(__dirname, '../testdata/temp'));
@@ -66,6 +71,20 @@ describe('Converter', () => {
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/changelog.json'));
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/tables/my_table.sql'));
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/data/my_table.sql'));
+        });
+
+        it('should create files on disk based on basic.sql file excluding data', () => {
+            reader = new Reader({ includingData: false });
+            converter = new Converter(reader, formatters);
+            const input = fs.readFileSync(path.resolve(__dirname, '../testdata/basic.sql'), 'utf8');
+            let result = converter.createFiles(input, path.resolve(__dirname, '../testdata/temp'));
+
+            // check that files exist and are accessible
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/changelog.json'));
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/tables/my_table.sql'));
+
+            (() => fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/data/my_table.sql')))
+                .should.throw();
         });
     });
 });

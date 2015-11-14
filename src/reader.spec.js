@@ -9,7 +9,7 @@ describe('Reader', () => {
     let reader;
 
     beforeEach(() => {
-        reader = new Reader();
+        reader = new Reader({ includeData: true });
     });
 
     describe('create table', () => {
@@ -156,6 +156,20 @@ describe('Reader', () => {
 
             result[3].type.should.equal('insert');
             result[3].name.should.equal('my_table2');
+        });
+
+        it('should read file that contains multiple statements excluding data', () => {
+            reader = new Reader({ includeData: false });
+            const input = fs.readFileSync(path.resolve(__dirname, '../testdata/reader-sort.sql'), 'utf8');
+            let result = reader.parse(input);
+
+            result.length.should.equal(2);
+
+            result[0].type.should.equal('table');
+            result[0].name.should.equal('my_table');
+
+            result[1].type.should.equal('table');
+            result[1].name.should.equal('my_table2');
         });
     });
 });

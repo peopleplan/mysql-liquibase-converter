@@ -1,6 +1,6 @@
 {
   "name": "mysql-liquibase-converter",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "The MySql to Liquibase Converter is intended to split up the contents of a single MySql sql file into a series of smaller files that are easier to maintain and version independently.",
   "main": "index.js",
   "scripts": {
@@ -39,7 +39,8 @@
     "gulp": "^3.9.0",
     "gulp-batch": "^1.0.5",
     "gulp-mocha": "^2.1.3",
-    "gulp-watch": "^4.3.5"
+    "gulp-watch": "^4.3.5",
+    "rimraf": "^2.4.3"
   },
   "dependencies": {
     "commander": "^2.9.0",

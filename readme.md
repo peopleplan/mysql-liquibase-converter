@@ -13,5 +13,5 @@ npm install --global mysql-liquibase-converter
 ## Usage
 
 ```
-mysqlbase <sqlFile> [outputLocation]
+mysqlbase [options] <sqlFile> [outputLocation]
 ```
