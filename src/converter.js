@@ -35,7 +35,8 @@ class Converter {
 
             json.databaseChangeLog.push({
                 include: {
-                    file: relativePath
+                    file: relativePath,
+                    relativeToChangelogFile: true
                 }
             });
         });
