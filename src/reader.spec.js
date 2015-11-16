@@ -22,6 +22,15 @@ describe('Reader', () => {
             result[0].match.should.equal('create table if not exists `my_table` ();');
         });
 
+        it('should read single line alter table statement', () => {
+            let result = reader.parse('alter table my_table add my_id int not null default 0;');
+
+            result.length.should.equal(1);
+            result[0].type.should.equal('table');
+            result[0].name.should.equal('my_table');
+            result[0].match.should.equal('alter table my_table add my_id int not null default 0;');
+        });
+
         it('should read single line create table statement without exists', () => {
             let result = reader.parse('create table `my_table` ();');
 

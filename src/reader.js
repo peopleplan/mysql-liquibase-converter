@@ -1,8 +1,8 @@
 class Reader {
     static tableExpression = {
         type: 'table',
-        pattern: [ /\bcreate\s+table\s+(if\s+not\s+exists\s+)?`?([^\s`]+)`?/gi, /;(?=[ \t]*$)/mi ],
-        nameIndex: 2
+        pattern: [ /\b(create|alter)\s+table\s+(if\s+not\s+exists\s+)?`?([^\s`]+)`?/gi, /;(?=[ \t]*$)/mi ],
+        nameIndex: 3
     };
 
     static insertExpression = {
