@@ -10,5 +10,6 @@ deploy:
   email: no-reply@peopleplan.com.au
   on:
     tags: true
+    node: 'stable'
   api_key:
     secure: YHiLzflWPLOxAKlIqHSfU+V8s2QOQG2crkm6G0pOiM3wb1IcCwoiyqX04IOQtgnrujTrN9jCY43uAhxd7NiYkRle4ayTHgOI9gmhzXbLNYOuyb2f6ituutbFJSncukwGZN3Mm2F/rWygTcExkFevCZ3Ce3XTK23cm+KXTBm/j4TWHCODZmgtcBAga1lp7ZUs2xv/vTxn2zvxRe1WMHiAGlFAoNN94r/S1xTPWv4GKgVHimGaxL/BsRMA1hRmsz+6k2FYLHKP8qeur3TtWJLUQ4tZWNLxCZrE6PPzWhtaHprxH9qQFV5+y2xOlR+IrnWiOHw1aigooCcGi+h4o6BcEG1LINB0iyOvuMPO4JL5dR+/0uc4KvsfrLhkggGOV+QLw4OeVTa4NLiYIHSizg+az6qag0tQoEZrn8KcXKhJVMg0VELC28CBsUPN0B9EInACPFlSoWO3kY/Ti20i/q2/3IUdOhDlXbKeY86IeL+lZySCgcBFLFjkC3LeM+fR5meWWjy7otbp9LbHXYhz+tuf2FXeik+cQHcNtoMOuLps334G85CEtcJ4xXoOdDzlJDSqDeqLMrNiZUCCbiHj94iV7f8HQThQ+uxHN2GiHHtXW4lLsDuRWnrxPM9BLetzPpJBCums1Jrb75187nsfW5afw1Qzjm9puNYB6mDuDERyG6Q=
