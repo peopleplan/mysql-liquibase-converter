@@ -13,5 +13,12 @@ npm install --global mysql-liquibase-converter
 ## Usage
 
 ```
-mysqlbase [options] <sqlFile> [outputLocation]
+  Usage: mysqlbase [options] <sqlFile> [outputLocation]
+
+  Options:
+
+    -h, --help         output usage information
+    -V, --version      output the version number
+    -d, --includeData  include table data
+    -k, --tempKeys     disable and re-enable foreign keys, helps order of execution issues
 ```
