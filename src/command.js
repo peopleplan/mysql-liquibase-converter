@@ -14,6 +14,7 @@ program
     .usage('[options] <sqlFile> [outputLocation]')
     .arguments('<sqlFile> [outputLocation]')
     .option('-d, --includeData', 'include table data', false)
+    .option('-k, --tempKeys', 'disable and re-enable foreign keys, helps order of execution issues', false)
     .action((sqlFile, outputLocation) => {
         outputDirectory = outputLocation;
         file = sqlFile;
@@ -28,13 +29,13 @@ if (!file) {
    process.exit(1);
 }
 
-let options = {
+let reader = new Reader({
     includeData: program.includeData
-};
-
-let reader = new Reader(options);
+});
 let formatters = new SqlFormatter();
-let converter = new Converter(reader, formatters);
+let converter = new Converter({
+    tempKeys: program.tempKeys
+}, reader, formatters);
 
 formatters['table'] = new TableFormatter();
 

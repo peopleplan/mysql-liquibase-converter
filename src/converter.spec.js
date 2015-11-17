@@ -20,7 +20,7 @@ describe('Converter', () => {
 
         reader = new Reader({ includeData: true });
 
-        converter = new Converter(reader, formatters);
+        converter = new Converter({}, reader, formatters);
     });
 
     describe('graph', () => {
@@ -42,6 +42,22 @@ describe('Converter', () => {
             result[0].type.should.equal('insert');
             result[0].name.should.equal('my_table');
             result[0].content.should.equal(`--liquibase formatted sql\n\n--changeset converter:baseline dbms:mysql\n${input}\n`);
+        });
+
+        it('should convert single insert into statement to object graph while temporarily disabling foreign keys', () => {
+            converter = new Converter({ tempKeys: true }, reader, formatters);
+            const input = 'INSERT INTO `my_table` (`key`, `value`) VALUES (\'my_key\', 1);';
+            let result = converter.toGraph(input);
+
+            result.length.should.equal(3);
+
+            result[0].type.should.equal('pre');
+
+            result[1].type.should.equal('insert');
+            result[1].name.should.equal('my_table');
+            result[1].content.should.equal(`--liquibase formatted sql\n\n--changeset converter:baseline dbms:mysql\n${input}\n`);
+
+            result[2].type.should.equal('post');
         });
 
         it('should convert basic.sql file to object graph', () => {
@@ -76,7 +92,7 @@ describe('Converter', () => {
 
         it('should create files on disk based on basic.sql file excluding data', () => {
             reader = new Reader({ includingData: false });
-            converter = new Converter(reader, formatters);
+            converter = new Converter({}, reader, formatters);
             const input = fs.readFileSync(path.resolve(__dirname, '../testdata/basic.sql'), 'utf8');
             let result = converter.createFiles(input, path.resolve(__dirname, '../testdata/temp'));
 
@@ -86,6 +102,23 @@ describe('Converter', () => {
 
             (() => fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/data/my_table.sql')))
                 .should.throw();
+        });
+
+        it('should create files on disk based on basic.sql file excluding data and temporarily disable foreign keys', () => {
+            reader = new Reader({ includingData: false });
+            converter = new Converter({ tempKeys: true }, reader, formatters);
+            const input = fs.readFileSync(path.resolve(__dirname, '../testdata/basic.sql'), 'utf8');
+            let result = converter.createFiles(input, path.resolve(__dirname, '../testdata/temp'));
+
+            // check that files exist and are accessible
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/changelog.json'));
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/tables/my_table.sql'));
+
+            (() => fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/data/my_table.sql')))
+                .should.throw();
+
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/support/pre_execution.sql'));
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/support/post_execution.sql'));
         });
     });
 });
