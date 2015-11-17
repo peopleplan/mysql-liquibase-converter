@@ -17,6 +17,20 @@ class Converter {
     toGraph (input) {
         let results = this.reader.parse(input);
 
+        if (this.options.tempKeys) {
+            results.unshift({
+                type: 'pre',
+                name: 'pre_execution',
+                match: 'SET FOREIGN_KEY_CHECKS=0;'
+            });
+
+            results.push({
+                type: 'post',
+                name: 'post_execution',
+                match: 'SET FOREIGN_KEY_CHECKS=1;'
+            });
+        }
+
         let items = results.map((r) => {
             return {
                 type: r.type,
@@ -24,20 +38,6 @@ class Converter {
                 content: (this.formatters[r.type] || this.formatters).format(r)
             }
         });
-
-        if (this.options.tempKeys) {
-            items.unshift({
-                type: 'pre',
-                name: 'pre_execution',
-                content: 'SET FOREIGN_KEY_CHECKS=0;'
-            });
-
-            items.push({
-                type: 'post',
-                name: 'post_execution',
-                content: 'SET FOREIGN_KEY_CHECKS=1;'
-            });
-        }
 
         return items;
     }
