@@ -147,6 +147,16 @@ describe('Reader', () => {
         });
     });
 
+    describe('comments', () => {
+        it('should ignore comments', () => {
+            let result = reader.parse('/*INSERT INTO `my_table` (`key`, `value`) VALUES (\'my_key\', 1);*/\nINSERT INTO `my_table` (`key`, `value`) VALUES (\'my_key\', 1);');
+
+            result.length.should.equal(1);
+            result[0].type.should.equal('insert');
+            result[0].name.should.equal('my_table');
+        });
+    });
+
     describe('combined', () => {
         it('should read file that contains multiple statements', () => {
             const input = fs.readFileSync(path.resolve(__dirname, '../testdata/reader-sort.sql'), 'utf8');

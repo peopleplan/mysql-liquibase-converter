@@ -48,6 +48,7 @@ describe('Converter', () => {
             const input = fs.readFileSync(path.resolve(__dirname, '../testdata/basic.sql'), 'utf8');
             let result = converter.toGraph(input);
 
+            console.log(result);
             result.length.should.equal(2);
 
             result[0].type.should.equal('table');
