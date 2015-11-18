@@ -9,3 +9,8 @@ INSERT INTO `my_table` (`id`, `type`) VALUES
 (2, 'two'),
 (3, 'three'),
 (4, 'four');
+
+CREATE TRIGGER `my_trigger` AFTER DELETE ON `my_table`
+FOR EACH ROW BEGIN
+    update  `summary` set my_value = my_value - 1 where id = old.my_id;
+END

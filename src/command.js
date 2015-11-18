@@ -4,6 +4,7 @@ import Converter from './converter';
 import Reader from './reader';
 import SqlFormatter from './sql-formatter';
 import TableFormatter from './table-formatter';
+import TriggerFormatter from './trigger-formatter';
 import fs from 'fs';
 
 let file;
@@ -38,6 +39,7 @@ let converter = new Converter({
 }, reader, formatters);
 
 formatters['table'] = new TableFormatter();
+formatters['trigger'] = new TriggerFormatter();
 
 let contents = fs.readFileSync(file, 'utf8');
 converter.createFiles(contents, outputDirectory);
