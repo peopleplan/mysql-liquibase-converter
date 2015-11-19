@@ -17,8 +17,14 @@ class Reader {
         nameIndex: 1
     };
 
+    static createTriggerExpression = {
+        type: 'trigger',
+        pattern: [ /\bcreate\s+trigger\s+`?([^\s`]+)`?/i, /\bend(?=[ \t]*$)/mi ],
+        nameIndex: 1
+    };
+
     constructor ({ includeData } = {}) {
-        this.expressions = [ Reader.blockCommentExpression, Reader.tableExpression ];
+        this.expressions = [ Reader.blockCommentExpression, Reader.tableExpression, Reader.createTriggerExpression ];
 
         if (includeData) {
             this.expressions.push(Reader.insertExpression);

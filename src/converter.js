@@ -2,11 +2,13 @@ import fd from 'filendir';
 import path from 'path';
 
 class Converter {
+    static defaultFolder = 'migrations/baseline/data';
     static folderTypeMap = {
-        'table': 'tables',
-        'pre': 'support',
-        'post': 'support'
-    }
+        'table': 'migrations/baseline/tables',
+        'pre': 'migrations/baseline/support',
+        'post': 'migrations/baseline/support',
+        'trigger': 'source/triggers'
+    };
 
     constructor (options, reader, formatters) {
         this.options = options;
@@ -71,8 +73,8 @@ class Converter {
     }
 
     getFilePath (type, name) {
-        let folderType = Converter.folderTypeMap[type] || 'data';
-        return `migrations/baseline/${folderType}/${name}.sql`;
+        let folderType = Converter.folderTypeMap[type] || Converter.defaultFolder;
+        return `${folderType}/${name}.sql`;
     }
 }
 

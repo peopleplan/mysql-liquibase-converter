@@ -157,6 +157,18 @@ describe('Reader', () => {
         });
     });
 
+    describe('triggers', () => {
+        it('should read create trigger statement', () => {
+            let createSql = 'CREATE TRIGGER `my_trigger` AFTER DELETE ON `my_table`\nFOR EACH ROW BEGIN\nupdate  `summary` set my_value = my_value - 1 where id = old.my_id;\nEND';
+            let result = reader.parse(`${createSql}\n`);
+
+            result.length.should.equal(1);
+            result[0].type.should.equal('trigger');
+            result[0].name.should.equal('my_trigger');
+            result[0].match.should.equal(createSql);
+        });
+    });
+
     describe('combined', () => {
         it('should read file that contains multiple statements', () => {
             const input = fs.readFileSync(path.resolve(__dirname, '../testdata/reader-sort.sql'), 'utf8');

@@ -3,6 +3,7 @@ import Converter from './converter';
 import Reader from './reader';
 import SqlFormatter from './sql-formatter';
 import TableFormatter from './table-formatter';
+import TriggerFormatter from './trigger-formatter';
 import fs from 'fs';
 import path from 'path';
 import rimraf from 'rimraf'
@@ -17,6 +18,7 @@ describe('Converter', () => {
     beforeEach(() => {
         formatters = new SqlFormatter();
         formatters['table'] = new TableFormatter();
+        formatters['trigger'] = new TriggerFormatter();
 
         reader = new Reader({ includeData: true });
 
@@ -64,14 +66,16 @@ describe('Converter', () => {
             const input = fs.readFileSync(path.resolve(__dirname, '../testdata/basic.sql'), 'utf8');
             let result = converter.toGraph(input);
 
-            console.log(result);
-            result.length.should.equal(2);
+            result.length.should.equal(3);
 
             result[0].type.should.equal('table');
             result[0].name.should.equal('my_table');
 
             result[1].type.should.equal('insert');
             result[1].name.should.equal('my_table');
+
+            result[2].type.should.equal('trigger');
+            result[2].name.should.equal('my_trigger');
         });
     });
 
@@ -88,6 +92,7 @@ describe('Converter', () => {
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/changelog.json'));
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/tables/my_table.sql'));
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/data/my_table.sql'));
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/source/triggers/my_trigger.sql'));
         });
 
         it('should create files on disk based on basic.sql file excluding data', () => {
@@ -99,6 +104,7 @@ describe('Converter', () => {
             // check that files exist and are accessible
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/changelog.json'));
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/tables/my_table.sql'));
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/source/triggers/my_trigger.sql'));
 
             (() => fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/data/my_table.sql')))
                 .should.throw();
@@ -113,6 +119,7 @@ describe('Converter', () => {
             // check that files exist and are accessible
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/changelog.json'));
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/tables/my_table.sql'));
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/source/triggers/my_trigger.sql'));
 
             (() => fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/data/my_table.sql')))
                 .should.throw();
