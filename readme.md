@@ -39,6 +39,6 @@ root/
     source/                     # root folder for non-stateful source code
         triggers/               # source for triggers defined here
         storedprocedures/       # stored procedures here (not implemented)
-        views/                  # views defined here (not impelement)
+        views/                  # views defined here (not implemented)
     changelog.json              # liquibase changelog file decribes the scripts and their order of execution
 ```
