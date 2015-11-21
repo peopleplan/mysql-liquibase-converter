@@ -81,6 +81,14 @@ describe('Converter', () => {
 
     describe('files', () => {
         beforeEach(() => {
+            let author = 'author'
+            let changesetId = 'v1.0';
+            formatters = new SqlFormatter(author, changesetId);
+            formatters['table'] = new TableFormatter(author, changesetId);
+            formatters['trigger'] = new TriggerFormatter(author);
+
+            converter = new Converter({}, reader, formatters);
+
             rimraf.sync(path.resolve(__dirname, '../testdata/temp'));
         });
 
@@ -90,8 +98,8 @@ describe('Converter', () => {
 
             // check that files exist and are accessible
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/changelog.json'));
-            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/tables/my_table.sql'));
-            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/data/my_table.sql'));
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/v1.0/tables/my_table.sql'));
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/v1.0/data/my_table.sql'));
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/source/triggers/my_trigger.sql'));
         });
 
@@ -103,10 +111,10 @@ describe('Converter', () => {
 
             // check that files exist and are accessible
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/changelog.json'));
-            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/tables/my_table.sql'));
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/v1.0/tables/my_table.sql'));
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/source/triggers/my_trigger.sql'));
 
-            (() => fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/data/my_table.sql')))
+            (() => fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/v1.0/data/my_table.sql')))
                 .should.throw();
         });
 
@@ -118,14 +126,14 @@ describe('Converter', () => {
 
             // check that files exist and are accessible
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/changelog.json'));
-            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/tables/my_table.sql'));
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/v1.0/tables/my_table.sql'));
             fs.accessSync(path.resolve(__dirname, '../testdata/temp/source/triggers/my_trigger.sql'));
 
-            (() => fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/data/my_table.sql')))
+            (() => fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/v1.0/data/my_table.sql')))
                 .should.throw();
 
-            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/support/pre_execution.sql'));
-            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/baseline/support/post_execution.sql'));
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/v1.0/support/pre_execution.sql'));
+            fs.accessSync(path.resolve(__dirname, '../testdata/temp/migrations/v1.0/support/post_execution.sql'));
         });
     });
 });

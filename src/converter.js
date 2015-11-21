@@ -2,11 +2,11 @@ import fd from 'filendir';
 import path from 'path';
 
 class Converter {
-    static defaultFolder = 'migrations/baseline/data';
+    static defaultFolder = 'migrations/${changesetId}/data';
     static folderTypeMap = {
-        'table': 'migrations/baseline/tables',
-        'pre': 'migrations/baseline/support',
-        'post': 'migrations/baseline/support',
+        'table': 'migrations/${changesetId}/tables',
+        'pre': 'migrations/${changesetId}/support',
+        'post': 'migrations/${changesetId}/support',
         'trigger': 'source/triggers'
     };
 
@@ -37,7 +37,8 @@ class Converter {
             return {
                 type: r.type,
                 name: r.name,
-                content: (this.formatters[r.type] || this.formatters).format(r)
+                content: (this.formatters[r.type] || this.formatters).format(r),
+                formatter: this.formatters[r.type] || this.formatters
             }
         });
 
@@ -51,7 +52,7 @@ class Converter {
         };
 
         graph.forEach((g) => {
-            let relativePath = this.getFilePath(g.type, g.name);
+            let relativePath = this.getFilePath(g.type, g.name, g.formatter);
 
             fd.writeFileSync(
                 path.join(outputLocation, relativePath),
@@ -72,9 +73,11 @@ class Converter {
         );
     }
 
-    getFilePath (type, name) {
-        let folderType = Converter.folderTypeMap[type] || Converter.defaultFolder;
-        return `${folderType}/${name}.sql`;
+    getFilePath (type, name, formatter) {
+        let folder = Converter.folderTypeMap[type] || Converter.defaultFolder;
+        folder = folder.replace(/\$\{changesetId\}/gi, formatter.changesetId);
+
+        return `${folder}/${name}.sql`;
     }
 }
 

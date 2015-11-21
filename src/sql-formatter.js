@@ -1,12 +1,17 @@
 import FormatterBase from './formatter-base';
 
 class SqlFormatter extends FormatterBase {
+    constructor(author, changesetId) {
+        super(author, changesetId);
+    }
+
     format (readerResult) {
         let output = '';
 
         output += this.getPrefix();
         output += '\n\n';
-        output += '--changeset converter:baseline dbms:mysql\n';
+        output += this.getChangesetComment();
+        output += '\n';
         output += this.formatContent(readerResult.match);
         output += '\n';
 
