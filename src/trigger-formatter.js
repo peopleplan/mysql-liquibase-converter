@@ -4,6 +4,7 @@ class TriggerFormatter extends SqlFormatter {
     constructor(author) {
         super(author, 'source');
         this.changesetProperties['endDelimiter'] = '//';
+        this.changesetProperties['runOnChange'] = 'true';
     }
 
     format (readerResult) {
